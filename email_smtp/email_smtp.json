@@ -1,6 +1,7 @@
 {
-  "version": "1.0.0",
   "file_name": "OEmailSMTP.php",
+  "version": "1.0.0",
+  "description": "Clase para realizar envíos de emails mediante SMTP.",
   "dependencies": [
     "Exception.php",
     "PHPMailer.php",

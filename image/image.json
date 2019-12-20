@@ -1,6 +1,7 @@
 {
-  "version": "1.0.0",
   "file_name": "OImage.php",
+  "version": "1.0.0",
+  "description": "Clase para manipular imágenes (redimensionar, cambiar de formato, crear nuevas...).",
   "updates": {
     "1.0.0": {
       "message": "1.0.0 - Versión inicial del plugin OImage",

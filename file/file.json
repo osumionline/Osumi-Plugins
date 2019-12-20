@@ -1,6 +1,7 @@
 {
-  "version": "1.0.0",
   "file_name": "OFile.php",
+  "version": "1.0.0",
+  "description": "Clase para manipular archivos (copiar, mover, borrar...).",
   "updates": {
     "1.0.0": {
       "message": "1.0.0 - Versión inicial del plugin OFile",
