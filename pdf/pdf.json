@@ -1,10 +1,11 @@
 {
   "version": "1.0.0",
+  "file_name": "OPDF.php",
   "updates": {
     "1.0.0": {
       "message": "1.0.0 - Versión inicial del plugin OPDF",
       "files": [
-        "pdf/OPDF.php"
+        "OPDF.php"
       ]
     }
   }

@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "file_name": "OEmailSMTP.php",
+  "dependencies": [
+    "Exception.php",
+    "PHPMailer.php",
+    "SMTP.php"
+  ],
+  "updates": {
+    "1.0.0": {
+      "message": "1.0.0 - Versión inicial del plugin OEmailSMTP",
+      "files": [
+        "OEmailSMTP.php"
+      ]
+    }
+  }
+}
