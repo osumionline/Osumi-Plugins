@@ -1,13 +1,13 @@
 {
   "plugins": [
-    {"name": "browser", "description": "Clase para obtener datos del navegador del usuario (plataforma, navegador, versión...)." },
-    {"name": "crypt", "description": "Clase para cifrar/descifrar textos." },
-    {"name": "email", "description": "Clase para realizar envíos de emails." },
-    {"name": "email_smtp", "description": "Clase para realizar envíos de emails mediante SMTP." },
-    {"name": "file", "description": "Clase para manipular archivos (copiar, mover, borrar...)." },
-    {"name": "ftp", "description": "Clase para realizar conexiones FTP a servidores remotos y manipular sus archivos (subir o bajar archivos, borrar, navegar por el servidor...)." },
-    {"name": "image", "description": "Clase para manipular imágenes (redimensionar, cambiar de formato, crear nuevas...)." },
-    {"name": "pdf", "description": "Clase para crear archivos PDF." },
-    {"name": "translate", "description": "Clase para crear una aplicación multi-idioma." }
+    {"name": "browser", "version": "1.0.0", "description": "Clase para obtener datos del navegador del usuario (plataforma, navegador, versión...)." },
+    {"name": "crypt", "version": "1.0.0", "description": "Clase para cifrar/descifrar textos." },
+    {"name": "email", "version": "1.0.0", "description": "Clase para realizar envíos de emails." },
+    {"name": "email_smtp", "version": "1.0.0", "description": "Clase para realizar envíos de emails mediante SMTP." },
+    {"name": "file", "version": "1.0.0", "description": "Clase para manipular archivos (copiar, mover, borrar...)." },
+    {"name": "ftp", "version": "1.0.0", "description": "Clase para realizar conexiones FTP a servidores remotos y manipular sus archivos (subir o bajar archivos, borrar, navegar por el servidor...)." },
+    {"name": "image", "version": "1.0.0", "description": "Clase para manipular imágenes (redimensionar, cambiar de formato, crear nuevas...)." },
+    {"name": "pdf", "version": "1.0.0", "description": "Clase para crear archivos PDF." },
+    {"name": "translate", "version": "1.0.0", "description": "Clase para crear una aplicación multi-idioma." }
   ]
 }
