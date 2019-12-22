@@ -2,8 +2,6 @@
 class OEmail{
   private $debug_mode   = false;
   private $log          = null;
-  private $is_smtp      = false;
-  private $smtp_data    = [];
   private $recipients   = [];
   private $subject      = '';
   private $message      = '';
@@ -20,10 +18,6 @@ class OEmail{
     $this->setLog($l);
     $this->getLog()->setSection($where);
     $this->getLog()->setModel('OEmail');
-    if ($c->getDefaultModule('email_smtp')){
-      $this->setIsSMTP(true);
-      $this->setSMTPData( $c->getSMTP() );
-    }
   }
 
   public function setDebugMode($dm){
@@ -38,20 +32,6 @@ class OEmail{
   }
   public function getLog(){
     return $this->log;
-  }
-
-  public function setIsSMTP($is){
-    $this->is_smtp = $is;
-  }
-  public function getIsSMTP(){
-    return $this->is_smtp;
-  }
-
-  public function setSMTPData($sd){
-    $this->smtp_data = $sd;
-  }
-  public function getSMTPData(){
-    return $this->smtp_data;
   }
 
   public function setRecipients($r){
@@ -142,72 +122,26 @@ class OEmail{
     else{
       $list = $this->getRecipients();
 
-      if (!$this->getIsSMTP()){
-        foreach ($list as $item){
-          $headers = '';
-          // Si es html tiene cabeceras especiales
-          if ($this->getIsHtml()){
-            $headers .= "MIME-Version: 1.0\r\n";
-            $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-          }
-          $headers .= "To: ".$item."\r\n";
-          $headers .= "From: ".$this->getFrom().( is_null($this->getFromName()) ? "" : "<".$this->getFromName().">" )."\r\n";
+      foreach ($list as $item){
+        $headers = '';
+        // Si es html tiene cabeceras especiales
+        if ($this->getIsHtml()){
+          $headers .= "MIME-Version: 1.0\r\n";
+          $headers .= "Content-type: text/html; charset=utf-8\r\n";
+        }
+        $headers .= "To: ".$item."\r\n";
+        $headers .= "From: ".$this->getFrom().( is_null($this->getFromName()) ? "" : "<".$this->getFromName().">" )."\r\n";
 
-          // Lo envio
-          if (mail($item, $this->getSubject(), $this->getMessage(), $headers)){
-            $this->addResultOk($item);
-          }
-          else{
-            $this->addResultError($item);
-            $ret['status'] = 'error';
-            $ret['mens'] .= 'Error al enviar email a: '.$item.' - ';
-          }
+        // Lo envio
+        if (mail($item, $this->getSubject(), $this->getMessage(), $headers)){
+          $this->addResultOk($item);
+        }
+        else{
+          $this->addResultError($item);
+          $ret['status'] = 'error';
+          $ret['mens'] .= 'Error al enviar email a: '.$item.' - ';
         }
       }
-      else{
-        $smtp_data = $this->getSMTPData();
-        foreach ($list as $item){
-          try{
-            $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
-            $mail->isSMTP();
-
-            $mail->CharSet = 'UTF-8';
-            //$mail->SMTPDebug = 1;
-            $mail->Host = $smtp_data['host'];
-            $mail->Port = $smtp_data['port'];
-            $mail->SMTPSecure = $smtp_data['secure'];
-            $mail->SMTPAuth = true;
-            $mail->Username = $smtp_data['user'];
-            $mail->Password = $smtp_data['pass'];
-            if (is_null($this->getFromName())){
-              $mail->setFrom($this->getFrom());
-            }
-            else{
-              $mail->setFrom($this->getFrom(), $this->getFromName());
-            }
-            $mail->addAddress($item);
-            $mail->Subject = $this->getSubject();
-            $mail->msgHTML($this->getMessage());
-
-            if ($mail->send()) {
-              $this->addResultOk($item);
-            }
-            else {
-              $this->addResultError($item);
-              $ret['status'] = 'error';
-              $ret['mens'] .= 'Error al enviar email a: '.$item.' - ';
-            }
-          }
-          catch(Exception $e){
-            $this->addResultError($item);
-            $ret['status'] = 'error';
-            $ret['mens'] .= 'Error al enviar email a: '.$item.' - ';
-          }
-
-          $mail = null;
-        }
-      }
-
     }
 
     return $ret;
