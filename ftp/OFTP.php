@@ -3,128 +3,137 @@
  * Clase para gestionar la Base de datos
  */
 class OFTP {
-  private $server;
-  private $user_name;
-  private $user_pass;
+	private $lang;
 
-  private $conn;
-  private $connected = false;
-  private $logged = false;
-  private $mode = FTP_ASCII;
-  private $auto_disconnect = true;
+	private $server;
+	private $user_name;
+	private $user_pass;
 
-  function __construct($server, $user, $pass){
-    $this->server    = $server;
-    $this->user_name = $user;
-    $this->user_pass = $pass;
-  }
+	private $conn;
+	private $connected = false;
+	private $logged = false;
+	private $mode = FTP_ASCII;
+	private $auto_disconnect = true;
+	
+	private $errors = [
+		'es' => ['CONNECTION' => 'Error de conexión: "%s"', 'LOGIN' => 'Error al iniciar sesión: "%s"'],
+		'en' => ['CONNECTION' => 'Connection error: "%s"', 'LOGIN' => 'Login error: "%s"'],
+	];
 
-  public function connect(){
-    $this->conn = ftp_connect($this->server);
-    if ($this->conn){
-      $this->connected = true;
-    }
-    return $this->connected;
-  }
+	function __construct($server, $user, $pass) {
+		global $core;
+		$this->lang      = $core->config->getLang();
+		$this->server    = $server;
+		$this->user_name = $user;
+		$this->user_pass = $pass;
+	}
 
-  public function disconnect(){
-    ftp_close($this->conn);
-    $this->connected = false;
-    $this->logged = false;
-  }
+	public function connect() {
+		$this->conn = ftp_connect($this->server);
+		if ($this->conn) {
+			$this->connected = true;
+		}
+		return $this->connected;
+	}
 
-  public function login(){
-    $this->logged = ftp_login($this->conn, $this->user_name, $this->user_pass);
-    return $this->logged;
-  }
+	public function disconnect() {
+		ftp_close($this->conn);
+		$this->connected = false;
+		$this->logged = false;
+	}
 
-  public function passive($pasv = true){
-    ftp_pasv($this->conn, $pasv);
-  }
+	public function login() {
+		$this->logged = ftp_login($this->conn, $this->user_name, $this->user_pass);
+		return $this->logged;
+	}
 
-  public function autoDisconnect($auto){
-    $this->auto_disconnect = $auto;
-  }
+	public function passive($pasv = true) {
+		ftp_pasv($this->conn, $pasv);
+	}
 
-  public function mode($mode){
-    switch ($mode){
-      case 'ascii':{
-        $this->mode = FTP_ASCII;
-      }
-      break;
-      case 'bin':{
-        $this->mode = FTP_BINARY;
-      }
-      break;
-    }
-  }
+	public function autoDisconnect($auto) {
+		$this->auto_disconnect = $auto;
+	}
 
-  private function checkConnection(){
-    if (!$this->connected && !$this->connect()){
-      throw new Exception('Error de conexión: "'.$this->server.'"');
-    }
-    if (!$this->logged && !$this->login()){
-      throw new Exception('Error al iniciar sesión: "'.$this->user_name.'"');
-    }
-  }
+	public function mode($mode) {
+		switch ($mode) {
+			case 'ascii': {
+				$this->mode = FTP_ASCII;
+			}
+			break;
+			case 'bin': {
+				$this->mode = FTP_BINARY;
+			}
+			break;
+		}
+	}
 
-  public function put($local, $remote){
-    $this->checkConnection();
+	private function checkConnection() {
+		if (!$this->connected && !$this->connect()) {
+			throw new Exception( sprintf($this->errors[$this->lang]['CONNECTION'], $this->server) );
+		}
+		if (!$this->logged && !$this->login()) {
+			throw new Exception( sprintf($this->errors[$this->lang]['LOGIN'], $this->user_name) );
+		}
+	}
 
-    $result = ftp_put($this->conn, $remote, $local, $this->mode);
+	public function put($local, $remote) {
+		$this->checkConnection();
 
-    if ($this->auto_disconnect){
-      $this->disconnect();
-    }
+		$result = ftp_put($this->conn, $remote, $local, $this->mode);
 
-    return $result;
-  }
+		if ($this->auto_disconnect) {
+			$this->disconnect();
+		}
 
-  public function get($remote, $local){
-    $this->checkConnection();
+		return $result;
+	}
 
-    $result = ftp_get($this->conn, $local, $remote, $this->mode);
+	public function get($remote, $local) {
+		$this->checkConnection();
 
-    if ($this->auto_disconnect){
-      $this->disconnect();
-    }
+		$result = ftp_get($this->conn, $local, $remote, $this->mode);
 
-    return $result;
-  }
+		if ($this->auto_disconnect) {
+			$this->disconnect();
+		}
 
-  public function delete($remote){
-    $this->checkConnection();
+		return $result;
+	}
 
-    $result = ftp_delete($this->conn, $remote);
+	public function delete($remote) {
+		$this->checkConnection();
 
-    if ($this->auto_disconnect){
-      $this->disconnect();
-    }
+		$result = ftp_delete($this->conn, $remote);
 
-    return $result;
-  }
+		if ($this->auto_disconnect) {
+			$this->disconnect();
+		}
 
-  public function chdir($dir){
-    $this->checkConnection();
+		return $result;
+	}
 
-    $result = ftp_chdir($this->conn, $dir);
+	public function chdir($dir) {
+		$this->checkConnection();
 
-    if ($this->auto_disconnect){
-      $this->disconnect();
-    }
+		$result = ftp_chdir($this->conn, $dir);
 
-    return $result;
-  }
+		if ($this->auto_disconnect) {
+			$this->disconnect();
+		}
 
-  public function mkdir($dir){
-    $this->checkConnection();
+		return $result;
+	}
 
-    $result = ftp_mkdir($this->conn, $dir);
+	public function mkdir($dir) {
+		$this->checkConnection();
 
-    if ($this->auto_disconnect){
-      $this->disconnect();
-    }
+		$result = ftp_mkdir($this->conn, $dir);
 
-    return $result;
-  }
+		if ($this->auto_disconnect) {
+			$this->disconnect();
+		}
+
+		return $result;
+	}
 }

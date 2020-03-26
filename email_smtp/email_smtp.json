@@ -1,18 +1,24 @@
 {
-  "file_name": "OEmailSMTP.php",
-  "version": "1.0.0",
-  "description": "Clase para realizar envíos de emails mediante SMTP.",
-  "dependencies": [
-    "Exception.php",
-    "PHPMailer.php",
-    "SMTP.php"
-  ],
-  "updates": {
-    "1.0.0": {
-      "message": "1.0.0 - Versión inicial del plugin OEmailSMTP",
-      "files": [
-        "OEmailSMTP.php"
-      ]
-    }
-  }
+	"file_name": "OEmailSMTP.php",
+	"version": "1.0.1",
+	"description": "Clase para realizar envíos de emails mediante SMTP.",
+	"dependencies": [
+		"Exception.php",
+		"PHPMailer.php",
+		"SMTP.php"
+	],
+	"updates": {
+		"1.0.1": {
+			"message": "1.0.1 - Cambios por OFW 5 y añado logs internos",
+			"files": [
+				"OEmailSMTP.php"
+			]
+		},
+		"1.0.0": {
+			"message": "1.0.0 - Versión inicial del plugin OEmailSMTP",
+			"files": [
+				"OEmailSMTP.php"
+			]
+		}
+	}
 }

@@ -1,13 +1,19 @@
 {
-  "file_name": "OTranslate.php",
-  "version": "1.0.0",
-  "description": "Clase para crear una aplicación multi-idioma.",
-  "updates": {
-    "1.0.0": {
-      "message": "1.0.0 - Versión inicial del plugin OTranslate",
-      "files": [
-        "OTranslate.php"
-      ]
-    }
-  }
+	"file_name": "OTranslate.php",
+	"version": "1.0.1",
+	"description": "Clase para crear una aplicación multi-idioma.",
+	"updates": {
+		"1.0.1": {
+			"message": "1.0.1 - Cambios por OFW 5 y refactorizaciones",
+			"files": [
+				"OTranslate.php"
+			]
+		},
+		"1.0.0": {
+			"message": "1.0.0 - Versión inicial del plugin OTranslate",
+			"files": [
+				"OTranslate.php"
+			]
+		}
+	}
 }

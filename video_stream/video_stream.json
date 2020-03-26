@@ -1,13 +1,19 @@
 {
-  "file_name": "OVideoStream.php",
-  "version": "1.0.0",
-  "description": "Clase para enviar un archivo de video por streaming.",
-  "updates": {
-    "1.0.0": {
-      "message": "1.0.0 - Versión inicial del plugin OVideoStream",
-      "files": [
-        "OVideoStream.php"
-      ]
-    }
-  }
+	"file_name": "OVideoStream.php",
+	"version": "1.0.1",
+	"description": "Clase para enviar un archivo de video por streaming.",
+	"updates": {
+		"1.0.1": {
+			"message": "1.0.1 - Refactorizaciones",
+			"files": [
+				"OVideoStream.php"
+			]
+		},
+		"1.0.0": {
+			"message": "1.0.0 - Versión inicial del plugin OVideoStream",
+			"files": [
+				"OVideoStream.php"
+			]
+		}
+	}
 }
