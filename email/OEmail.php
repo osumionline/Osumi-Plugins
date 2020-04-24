@@ -319,17 +319,20 @@ class OEmail {
 	 * @return string String with the bodys contentx
 	 */
 	private function getBody(string $separator): string {
-		if (count($this->attachments)==0){
-			$body = "--" . $separator . $this->eol;
-		}
-		if ($this->is_html) {
-	    	$body .= "Content-Type: text/html; charset=\"utf-8\"" . $this->eol;
+		$body = '';
+		if (count($this->attachments)>0){
+			$body .= "--" . $separator . $this->eol;
+			if ($this->is_html) {
+	    		$body .= "Content-Type: text/html; charset=\"utf-8\"" . $this->eol;
+	    	}
+	    	else{
+		    	$body .= "Content-Type: text/plain; charset=\"utf-8\"" . $this->eol;
+	    	}
+	    	$body .= "Content-Transfer-Encoding: 8bit" . $this->eol;
 	    }
-	    else{
-		    $body .= "Content-Type: text/plain; charset=\"utf-8\"" . $this->eol;
-	    }
-	    $body .= "Content-Transfer-Encoding: 8bit" . $this->eol;
 	    $body .= $this->message . $this->eol;
+
+	    return $body;
 	}
 
 	/**
@@ -373,7 +376,7 @@ class OEmail {
 
 			foreach ($this->recipients as $item) {
 				// A random hash will be necessary to send mixed content
-				$separator = md5(time());
+				$separator = md5(uniqid());
 
 				// Headers
 				$headers = $this->getHeaders($item, $separator);
