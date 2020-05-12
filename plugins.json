@@ -1,7 +1,7 @@
 {
 	"plugins": [
 		{"name": "browser", "version": "1.0.0", "description": "Clase para obtener datos del navegador del usuario (plataforma, navegador, versión...)." },
-		{"name": "crypt", "version": "1.1.0", "description": "Clase para cifrar/descifrar textos." },
+		{"name": "crypt", "version": "1.1.1", "description": "Clase para cifrar/descifrar textos." },
 		{"name": "email", "version": "1.1.1", "description": "Clase para realizar envíos de emails." },
 		{"name": "email_smtp", "version": "1.0.1", "description": "Clase para realizar envíos de emails mediante SMTP." },
 		{"name": "file", "version": "1.1.0", "description": "Clase para manipular archivos (copiar, mover, borrar...)." },

@@ -8,7 +8,7 @@ class OCrypt {
 	 *
 	 * @param string $key Encryption string key
 	 */
-	function __construct(?string $key=null): void {
+	function __construct(?string $key=null) {
 		if (!is_null($key)) {
 			$this->setKey($key);
 		}
