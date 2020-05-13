@@ -1,8 +1,14 @@
 {
 	"file_name": "OImage.php",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"description": "Clase para manipular imágenes (redimensionar, cambiar de formato, crear nuevas...).",
 	"updates": {
+		"1.1.0": {
+			"message": "1.1.0 - Añado tipado fuerte",
+			"files": [
+				"OImage.php"
+			]
+		},
 		"1.0.1": {
 			"message": "1.0.1 - Refactorizaciones",
 			"files": [
