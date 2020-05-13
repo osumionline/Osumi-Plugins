@@ -1,21 +1,27 @@
-<?php
-
+<?php declare(strict_types=1);
 class OVideoStream {
-	private $path = '';
-	private $stream = '';
-	private $buffer = 102400;
-	private $start  = -1;
-	private $end    = -1;
-	private $size   = 0;
+	private string $path   = '';
+	private string $stream = '';
+	private int    $buffer = 102400;
+	private int    $start  = -1;
+	private int    $end    = -1;
+	private int    $size   = 0;
 
-	function __construct($filePath) {
-		$this->path = $filePath;
+	/**
+	 * Set path of the file to be loaded on startup
+	 *
+	 * @param string $file_path Path of the file to be loaded
+	 */
+	function __construct(string $file_path) {
+		$this->path = $file_path;
 	}
 
 	/**
 	 * Open stream
+	 *
+	 * @return void
 	 */
-	private function open() {
+	private function open(): void {
 		if (!($this->stream = fopen($this->path, 'rb'))) {
 			die('Could not open stream for reading');
 		}
@@ -23,17 +29,19 @@ class OVideoStream {
 
 	/**
 	 * Set proper header to serve the video content
+	 *
+	 * @return void
 	 */
-	private function setHeader() {
+	private function setHeader(): void {
 		ob_get_clean();
-		header("Content-Type: video/mp4");
-		header("Cache-Control: max-age=2592000, public");
-		header("Expires: ".gmdate('D, d M Y H:i:s', time()+2592000) . ' GMT');
-		header("Last-Modified: ".gmdate('D, d M Y H:i:s', @filemtime($this->path)) . ' GMT' );
+		header('Content-Type: video/mp4');
+		header('Cache-Control: max-age=2592000, public');
+		header('Expires: '.gmdate('D, d M Y H:i:s', time()+2592000) . ' GMT');
+		header('Last-Modified: '.gmdate('D, d M Y H:i:s', @filemtime($this->path)) . ' GMT');
 		$this->start = 0;
 		$this->size  = filesize($this->path);
 		$this->end   = $this->size - 1;
-		header("Accept-Ranges: 0-".$this->end);
+		header('Accept-Ranges: 0-'.$this->end);
 
 		if (isset($_SERVER['HTTP_RANGE'])) {
 			$c_start = $this->start;
@@ -42,7 +50,7 @@ class OVideoStream {
 			list(, $range) = explode('=', $_SERVER['HTTP_RANGE'], 2);
 			if (strpos($range, ',') !== false) {
 				header('HTTP/1.1 416 Requested Range Not Satisfiable');
-				header("Content-Range: bytes $this->start-$this->end/$this->size");
+				header('Content-Range: bytes '.$this->start.'-'.$this->end.'/'.$this->size);
 				exit;
 			}
 			if ($range == '-') {
@@ -57,7 +65,7 @@ class OVideoStream {
 			$c_end = ($c_end > $this->end) ? $this->end : $c_end;
 			if ($c_start > $c_end || $c_start > $this->size - 1 || $c_end >= $this->size) {
 				header('HTTP/1.1 416 Requested Range Not Satisfiable');
-				header("Content-Range: bytes $this->start-$this->end/$this->size");
+				header('Content-Range: bytes '.$this->start.'-'.$this->end.'/'.$this->size);
 				exit;
 			}
 			$this->start = $c_start;
@@ -65,26 +73,30 @@ class OVideoStream {
 			$length = $this->end - $this->start + 1;
 			fseek($this->stream, $this->start);
 			header('HTTP/1.1 206 Partial Content');
-			header("Content-Length: ".$length);
-			header("Content-Range: bytes $this->start-$this->end/".$this->size);
+			header('Content-Length: '.$length);
+			header('Content-Range: bytes '.$this->start.'-'.$this->end.'/'.$this->size);
 		}
 		else {
-			header("Content-Length: ".$this->size);
+			header('Content-Length: '.$this->size);
 		}
 	}
 
 	/**
 	 * Close curretly opened stream
+	 *
+	 * @return void
 	 */
-	private function end() {
+	private function end(): void {
 		fclose($this->stream);
 		exit;
 	}
 
 	/**
 	 * Perform the streaming of calculated range
+	 *
+	 * @return void
 	 */
-	private function stream() {
+	private function stream(): void {
 		$i = $this->start;
 		set_time_limit(0);
 		while (!feof($this->stream) && $i <= $this->end) {
@@ -101,8 +113,10 @@ class OVideoStream {
 
 	/**
 	 * Start streaming video content
+	 *
+	 * @return void
 	 */
-	function start() {
+	function start(): void {
 		$this->open();
 		$this->setHeader();
 		$this->stream();
@@ -110,8 +124,10 @@ class OVideoStream {
 	}
 }
 
-/*
-$stream = new OVideoStream($filePath);
-$stream->start();
-https://stackoverflow.com/a/39897872/921329
-*/
+/**
+ * Usage example
+ *
+ * $stream = new OVideoStream($filePath);
+ * $stream->start();
+ * https://stackoverflow.com/a/39897872/921329
+ */
