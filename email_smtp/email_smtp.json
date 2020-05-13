@@ -1,6 +1,6 @@
 {
 	"file_name": "OEmailSMTP.php",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "Clase para realizar envíos de emails mediante SMTP.",
 	"dependencies": [
 		"Exception.php",
@@ -8,6 +8,14 @@
 		"SMTP.php"
 	],
 	"updates": {
+		"1.1.1": {
+			"message": "1.1.1 - Faltaban los archivos de PHPMailer (5.5 -> 6.15) en la última release",
+			"files": [
+				"Exception.php",
+				"SMTP.php",
+				"PHPMailer.php"
+			]
+		},
 		"1.1.0": {
 			"message": "1.1.0 - Añado tipado fuerte, soporte para adjuntos y actualizo PHPMailer (5.5 -> 6.15)",
 			"files": [
