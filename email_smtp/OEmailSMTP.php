@@ -1,22 +1,26 @@
-<?php
+<?php declare(strict_types=1);
 class OEmailSMTP {
-	private $debug        = false;
-	private $l            = null;
-	private $lang         = 'es';
-	private $smtp_data    = [];
-	private $recipients   = [];
-	private $subject      = '';
-	private $message      = '';
-	private $is_html      = true;
-	private $from         = '';
-	private $from_name    = null;
-	private $result_ok    = [];
-	private $result_error = [];
-	private $errors       = [
+	private bool    $debug        = false;
+	private ?Olog   $l            = null;
+	private string  $lang         = 'es';
+	private array   $smtp_data    = [];
+	private array   $recipients   = [];
+	private string  $subject      = '';
+	private string  $message      = '';
+	private bool    $is_html      = true;
+	private string  $from         = '';
+	private ?string $from_name    = null;
+	private array   $attachments  = [];
+	private array   $result_ok    = [];
+	private array   $result_error = [];
+	private array   $errors       = [
 		'es' => ['NO_RECIPIENTS' => '¡No hay destinatarios!', 'ERROR_SENDING' => 'Error al enviar email a: '],
 		'es' => ['NO_RECIPIENTS' => 'There are no recipients!', 'ERROR_SENDING' => 'Error sending the email to: '],
 	];
 
+	/**
+	 * Load debugger and application language on startup
+	 */
 	function __construct() {
 		global $core;
 		$this->debug = ($core->config->getLog('level') == 'ALL');
@@ -26,103 +30,282 @@ class OEmailSMTP {
 		$this->lang = $core->config->getLang();
 	}
 
-	private function log($str) {
+	/**
+	 * Logs internal information of the class
+	 *
+	 * @param string $str String to be logged
+	 *
+	 * @return void
+	 */
+	private function log(string $str): void {
 		if ($this->debug) {
 			$this->l->debug($str);
 		}
 	}
 
-	public function setSMTPData($sd) {
+	/**
+	 * Set SMTP connection data
+	 *
+	 * @param array $sd SMTP connection data
+	 *
+	 * @return void
+	 */
+	public function setSMTPData(array $sd): void {
 		$this->smtp_data = $sd;
 	}
 
-	public function getSMTPData() {
+	/**
+	 * Get SMTP connection data
+	 *
+	 * @return array SMTP connection data
+	 */
+	public function getSMTPData(): array {
 		return $this->smtp_data;
 	}
 
-	public function setRecipients($r) {
+	/**
+	 * Set email recipient list
+	 *
+	 * @param array $r Array of recipient emails
+	 *
+	 * @return void
+	 */
+	public function setRecipients(array $r): void {
 		$this->recipients = $r;
 	}
 
-	public function getRecipients() {
+	/**
+	 * Get email recipient list
+	 *
+	 * @return array Array of recipient emails
+	 */
+	public function getRecipients(): array {
 		return $this->recipients;
 	}
 
-	public function addRecipient($r) {
+	/**
+	 * Add recipient to the list
+	 *
+	 * @param string $r New recipients email
+	 *
+	 * @return void
+	 */
+	public function addRecipient(string $r): void {
 		array_push($this->recipients, $r);
 	}
 
-	public function setSubject($s) {
+	/**
+	 * Set emails subject
+	 *
+	 * @param string $s Emails subject
+	 *
+	 * @return void
+	 */
+	public function setSubject(string $s): void {
 		$this->subject = $s;
 	}
 
-	public function getSubject() {
+	/**
+	 * Get emails subject
+	 *
+	 * @return string Emails subject
+	 */
+	public function getSubject(): string {
 		return $this->subject;
 	}
 
-	public function setMessage($m) {
+	/**
+	 * Set emails message content (plain text or HTML)
+	 *
+	 * @param string $m Emails message content
+	 *
+	 * @return void
+	 */
+	public function setMessage(string $m): void {
 		$this->message = $m;
 	}
 
-	public function getMessage() {
+	/**
+	 * Get emails message content
+	 *
+	 * @return string Emails message content
+	 */
+	public function getMessage(): string {
 		return $this->message;
 	}
 
-	public function setIsHtml($ih) {
+	/**
+	 * Set if the email content is plain text or HTML
+	 *
+	 * @param bool $ih Emails message content is HTML
+	 *
+	 * @return void
+	 */
+	public function setIsHtml(bool $ih): void {
 		$this->is_html = $ih;
 	}
 
-	public function getIsHtml() {
+	/**
+	 * Get if the email content is HTML
+	 *
+	 * @return bool Emails content is HTML
+	 */
+	public function getIsHtml(): bool {
 		return $this->is_html;
 	}
 
-	public function setFrom($f, $name=null) {
+	/**
+	 * Set emails sender address and name
+	 *
+	 * @param string $f Senders email address
+	 *
+	 * @param string $name Senders full name
+	 *
+	 * @return void
+	 */
+	public function setFrom(string $f, ?string $name=null): void {
 		$this->from = $f;
 		if (!is_null($name)) {
 			$this->from_name = $name;
 		}
 	}
 
-	public function getFrom() {
+	/**
+	 * Get emails sender address
+	 *
+	 * @return string Senders email address
+	 */
+	public function getFrom(): string {
 		return $this->from;
 	}
 
-	public function setFromName($n) {
+	/**
+	 * Set senders full name
+	 *
+	 * @param string $n Senders full name
+	 *
+	 * @return void
+	 */
+	public function setFromName(string $n): void {
 		$this->from_name = $n;
 	}
 
-	public function getFromName() {
+	/**
+	 * Get senders full name
+	 *
+	 * @return string Senders full name
+	 */
+	public function getFromName(): ?string {
 		return $this->from_name;
 	}
 
-	public function setResultOk($ro) {
+	/**
+	 * Set list of filenames/paths to be attached to the email
+	 *
+	 * @param array $a List of filenames/paths to be attached
+	 *
+	 * @return void
+	 */
+	public function setAttachments(array $a): void {
+		$this->attachments = $a;
+	}
+
+	/**
+	 * Get list of filenames/paths to be attached to the email
+	 *
+	 * @return array List of filenames/paths to be attached
+	 */
+	public function getAttachments(): array {
+		return $this->attachments;
+	}
+
+	/**
+	 * Add filename/path to be attached to the email
+	 *
+	 * @param string $a Name/path of the file to be attached
+	 */
+	public function addAttachment(string $a): void {
+		array_push($this->attachments, $a);
+	}
+
+	/**
+	 * Set list of recipients that got the email correctly
+	 *
+	 * @param array $ro List of recipients
+	 *
+	 * @return void
+	 */
+	public function setResultOk(array $ro): void {
 		$this->result_ok = $ro;
 	}
 
-	public function getResultOk() {
+	/**
+	 * Get list of recipients that got the email correctly
+	 *
+	 * @return array List of recipients
+	 */
+	public function getResultOk(): array {
 		return $this->result_ok;
 	}
 
-	public function addResultOk($ro) {
+	/**
+	 * Add recipient to the list that got the email correctly
+	 *
+	 * @param string $ro Email address of the recipient
+	 *
+	 * @return void
+	 */
+	public function addResultOk(string $ro): void {
 		array_push($this->result_ok, $ro);
 	}
 
-	public function setResultError($re) {
+	/**
+	 * Set list of recipients that didn't get the email because of an error
+	 *
+	 * @param array List of recipients
+	 *
+	 * @return void
+	 */
+	public function setResultError(array $re): void {
 		$this->result_error = $re;
 	}
 
-	public function getResultError() {
+	/**
+	 * Get list of recipients that didn't get the email because of an error
+	 *
+	 * @return array List of recipients
+	 */
+	public function getResultError(): array {
 		return $this->result_error;
 	}
 
-	public function addResultError($re) {
+	/**
+	 * Add recipient to the list that didn't get the email because of an error
+	 *
+	 * @param string $ro Email address of the recipient
+	 *
+	 * @return void
+	 */
+	public function addResultError(string $re): void {
 		array_push($this->result_error, $re);
 	}
 
-	private function getErrorMessage($key) {
+	/**
+	 * Get localized error message
+	 *
+	 * @param string $key Key code of the requested message
+	 *
+	 * @return string Requested localized error message
+	 */
+	private function getErrorMessage(string $key): string {
 		return $this->errors[$this->lang][$key];
 	}
 
+	/**
+	 * Send email
+	 *
+	 * @return array Status information array (ok/error) and error message (if any)
+	 */
 	public function send() {
 		$ret = ['status'=>'ok','mens'=>''];
 
@@ -142,7 +325,6 @@ class OEmailSMTP {
 					$mail->isSMTP();
 
 					$mail->CharSet = 'UTF-8';
-					//$mail->SMTPDebug = 1;
 					$mail->Host = $smtp_data['host'];
 					$mail->Port = $smtp_data['port'];
 					$mail->SMTPSecure = $smtp_data['secure'];
@@ -158,6 +340,12 @@ class OEmailSMTP {
 					$mail->addAddress($item);
 					$mail->Subject = $this->getSubject();
 					$mail->msgHTML($this->getMessage());
+
+					if (count($this->attachments)>0) {
+						foreach ($this->attachments as $attachment) {
+							$mail->addAttachment($attachment);
+						}
+					}
 
 					if ($mail->send()) {
 						$this->addResultOk($item);
