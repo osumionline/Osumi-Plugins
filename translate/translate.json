@@ -1,8 +1,14 @@
 {
 	"file_name": "OTranslate.php",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"description": "Clase para crear una aplicación multi-idioma.",
 	"updates": {
+		"1.1.0": {
+			"message": "1.1.0 - Añado tipado fuerte",
+			"files": [
+				"OTranslate.php"
+			]
+		},
 		"1.0.1": {
 			"message": "1.0.1 - Cambios por OFW 5 y refactorizaciones",
 			"files": [

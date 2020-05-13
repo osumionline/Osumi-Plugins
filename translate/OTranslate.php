@@ -1,49 +1,86 @@
-<?php
+<?php declare(strict_types=1);
 class OTranslate {
-	private $page = '';
-	private $data = null;
-	private $translations = [];
+	private string $page         = '';
+	private ?array $data         = null;
+	private array  $translations = [];
 
-	function __construct() {}
-
-	public function setPage($p) {
+	/**
+	 * Set key name of the loaded page
+	 *
+	 * @param string $p Key name of the loaded page
+	 *
+	 * @return void
+	 */
+	public function setPage(string $p): void {
 		$this->page = $p;
 		$this->loadTranslations();
 	}
 
-	public function getPage() {
+	/**
+	 * Get key name of the loaded page
+	 *
+	 * @return string Key name of the loaded page
+	 */
+	public function getPage(): string {
 		return $this->page;
 	}
 
-	public function setData($d) {
+	/**
+	 * Set whole list translation strings
+	 *
+	 * @param array $d List of translation strings
+	 *
+	 * @return void
+	 */
+	public function setData(array $d): void {
 		$this->data = $d;
 	}
 
-	public function getData() {
+	/**
+	 * Get whole list of translations strings
+	 *
+	 * @return array List of translation strings
+	 */
+	public function getData(): array {
 		return $this->data;
 	}
 
-	public function setTranslations($t) {
+	/**
+	 * Set list of translations strings to be used on loaded page
+	 *
+	 * @param array $t List of translation strings
+	 *
+	 * @return void
+	 */
+	public function setTranslations(array $t): void {
 		$this->translations = $t;
 	}
 
-	public function getTranslations() {
+	/**
+	 * Get list of translation strings to be used on loaded page
+	 *
+	 * @return array List of translation strings
+	 */
+	public function getTranslations(): array {
 		return $this->translations;
 	}
 
-	public function loadTranslations() {
+	/**
+	 * Load list of translations from the translations file and filter for the loaded page
+	 *
+	 * @return void
+	 */
+	public function loadTranslations(): void {
 		global $core;
-		if (is_null($this->getData())) {
-			$translations_dir = $core->config->getDir('app_config').'translations.json';
-			$data = json_decode( file_get_contents( $translations_dir ), true );
-			$this->setData($data);
+		if (is_null($this->data)) {
+			$data = json_decode( file_get_contents( $core->config->getDir('app_config').'translations.json' ), true );
+			$this->data = $data;
 		}
-		$data = $this->getData();
-		if (array_key_exists($this->getPage(), $data['translations'])) {
-			$this->setTranslations( $data['translations'][$this->getPage()] );
+		if (array_key_exists($this->page, $this->data['translations'])) {
+			$this->translations = $this->data['translations'][$this->page];
 		}
 		else {
-			$this->setTranslations( [] );
+			$this->translations = [];
 		}
 	}
 }
