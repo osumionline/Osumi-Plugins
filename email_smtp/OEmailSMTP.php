@@ -19,7 +19,7 @@ class OEmailSMTP {
 	];
 
 	/**
-	 * Load debugger and application language on startup
+	 * Load debugger, SMTP configuration and application language on startup
 	 */
 	function __construct() {
 		global $core;
@@ -28,6 +28,7 @@ class OEmailSMTP {
 			$this->l = new OLog();
 		}
 		$this->lang = $core->config->getLang();
+		$this->smtp_data = $core->config->getSMTP();
 	}
 
 	/**
@@ -41,26 +42,6 @@ class OEmailSMTP {
 		if ($this->debug) {
 			$this->l->debug($str);
 		}
-	}
-
-	/**
-	 * Set SMTP connection data
-	 *
-	 * @param array $sd SMTP connection data
-	 *
-	 * @return void
-	 */
-	public function setSMTPData(array $sd): void {
-		$this->smtp_data = $sd;
-	}
-
-	/**
-	 * Get SMTP connection data
-	 *
-	 * @return array SMTP connection data
-	 */
-	public function getSMTPData(): array {
-		return $this->smtp_data;
 	}
 
 	/**
@@ -317,7 +298,6 @@ class OEmailSMTP {
 		else {
 			$list = $this->getRecipients();
 			$this->log('[OEmail] - Sending emails to '.count($list).' addresses');
-			$smtp_data = $this->getSMTPData();
 
 			foreach ($list as $item) {
 				try {
@@ -325,12 +305,12 @@ class OEmailSMTP {
 					$mail->isSMTP();
 
 					$mail->CharSet = 'UTF-8';
-					$mail->Host = $smtp_data['host'];
-					$mail->Port = $smtp_data['port'];
-					$mail->SMTPSecure = $smtp_data['secure'];
+					$mail->Host = $this->smtp_data['host'];
+					$mail->Port = $this->smtp_data['port'];
+					$mail->SMTPSecure = $this->smtp_data['secure'];
 					$mail->SMTPAuth = true;
-					$mail->Username = $smtp_data['user'];
-					$mail->Password = $smtp_data['pass'];
+					$mail->Username = $this->smtp_data['user'];
+					$mail->Password = $this->smtp_data['pass'];
 					if (is_null($this->getFromName())) {
 						$mail->setFrom($this->getFrom());
 					}
@@ -361,7 +341,7 @@ class OEmailSMTP {
 				catch (Exception $e) {
 					$this->addResultError($item);
 					$ret['status'] = 'error';
-					$ret['mens'] .= $this->getErrorMessage('ERROR_SENDING').$item.' - ';
+					$ret['mens'] .= $this->getErrorMessage('ERROR_SENDING').$item.' - Error: '.$e->errorMessage();
 					$this->log('Error sending email to: '.$item);
 				}
 
