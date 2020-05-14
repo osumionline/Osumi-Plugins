@@ -1,6 +1,6 @@
 {
 	"plugins": [
-		{"name": "browser", "version": "1.0.0", "description": "Clase para obtener datos del navegador del usuario (plataforma, navegador, versión...)." },
+		{"name": "browser", "version": "1.1.0", "description": "Clase para obtener datos del navegador del usuario (plataforma, navegador, versión...)." },
 		{"name": "crypt", "version": "1.1.1", "description": "Clase para cifrar/descifrar textos." },
 		{"name": "email", "version": "1.1.1", "description": "Clase para realizar envíos de emails." },
 		{"name": "email_smtp", "version": "1.1.2", "description": "Clase para realizar envíos de emails mediante SMTP." },
