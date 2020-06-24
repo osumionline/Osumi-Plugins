@@ -342,7 +342,7 @@ class OEmailSMTP {
 					$this->addResultError($item);
 					$ret['status'] = 'error';
 					$ret['mens'] .= $this->getErrorMessage('ERROR_SENDING').$item.' - Error: '.$e->errorMessage();
-					$this->log('Error sending email to: '.$item);
+					$this->log('Error sending email to: "'.$item.'": '.$e->errorMessage());
 				}
 
 				$mail = null;

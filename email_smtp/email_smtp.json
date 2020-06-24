@@ -1,6 +1,6 @@
 {
 	"file_name": "OEmailSMTP.php",
-	"version": "1.1.2",
+	"version": "1.1.3",
 	"description": "Clase para realizar envíos de emails mediante SMTP.",
 	"dependencies": [
 		"Exception.php",
@@ -8,6 +8,12 @@
 		"SMTP.php"
 	],
 	"updates": {
+		"1.1.3": {
+			"message": "1.1.3 - En caso de error, añado el mensaje al log",
+			"files": [
+				"OEmailSMTP.php"
+			]
+		},
 		"1.1.2": {
 			"message": "1.1.2 - Correcciones tras pruebas",
 			"files": [
