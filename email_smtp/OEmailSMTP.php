@@ -28,7 +28,7 @@ class OEmailSMTP {
 			$this->l = new OLog();
 		}
 		$this->lang = $core->config->getLang();
-		$this->smtp_data = $core->config->getSMTP();
+		$this->smtp_data = $core->config->getPluginConfig('email_smtp');
 	}
 
 	/**
