@@ -11,6 +11,6 @@
 		{"name": "token", "version": "1.1.1", "description": "Clase para gestionar Tokens JWT." },
 		{"name": "translate", "version": "1.1.0", "description": "Clase para crear una aplicación multi-idioma." },
 		{"name": "video_stream", "version": "1.1.0", "description": "Clase para enviar un archivo de video por streaming." },
-		{"name": "paypal", "version": "1.0.0", "description": "Clase para crear llamadas a Paypal." }
+		{"name": "paypal", "version": "1.0.1", "description": "Clase para crear llamadas a Paypal." }
 	]
 }

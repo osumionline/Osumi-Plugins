@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 class OPaypal {
+	private bool    $sandbox = false;
 	private ?string $paypal_url = null;
 	private string  $lc = 'ES';
 	private string  $currency = 'EUR';
@@ -8,6 +9,11 @@ class OPaypal {
 	private ?string $ok_return = null;
 	private ?string $notify_url = null;
 	private array   $items = [];
+	
+	public function __construct(bool $sandbox = false) {
+		$this->sandbox = $sandbox;
+		$this->paypal_url = $sandbox ? 'https://www.sandbox.paypal.com/cgi-bin/webscr' : 'https://www.paypal.com/cgi-bin/webscr';
+	}
 
 	/**
 	 * Set the Paypal URL (to use in Sandbox or Production)
