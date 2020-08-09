@@ -1,0 +1,13 @@
+{
+	"file_name": "OPaypal.php",
+	"version": "1.0.0",
+	"description": "Clase para crear llamadas a Paypal.",
+	"updates": {
+		"1.0.0": {
+			"message": "1.0.0 - Versión inicial del plugin OPaypal",
+			"files": [
+				"OPaypal.php"
+			]
+		}
+	}
+}
