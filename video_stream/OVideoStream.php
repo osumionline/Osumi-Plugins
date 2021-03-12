@@ -1,4 +1,10 @@
 <?php declare(strict_types=1);
+
+namespace OsumiFramework\OFW\Plugins;
+
+/**
+ * Utility class to read a video file and stream it instead of sending it directly
+ */
 class OVideoStream {
 	private string $path   = '';
 	private string $stream = '';
@@ -101,7 +107,7 @@ class OVideoStream {
 		set_time_limit(0);
 		while (!feof($this->stream) && $i <= $this->end) {
 			$bytesToRead = $this->buffer;
-			if (($i+$bytesToRead) > $this->end) {
+			if (($i + $bytesToRead) > $this->end) {
 				$bytesToRead = $this->end - $i + 1;
 			}
 			$data = fread($this->stream, $bytesToRead);

@@ -1,6 +1,6 @@
 {
 	"file_name": "OEmailSMTP.php",
-	"version": "1.2.0",
+	"version": "2.0.0",
 	"description": "Clase para realizar envíos de emails mediante SMTP.",
 	"dependencies": [
 		"Exception.php",
@@ -9,6 +9,12 @@
 	],
 	"config": ["host", "port", "secure", "user", "pass"],
 	"updates": {
+		"2.0.0": {
+			"message": "2.0.0 - Añado nombre de espacios para OFW 7.0",
+			"files": [
+				"OEmailSMTP.php"
+			]
+		},
 		"1.2.0": {
 			"message": "1.2.0 - Nuevo sistema de configuración de plugins en OFW 6.0",
 			"files": [

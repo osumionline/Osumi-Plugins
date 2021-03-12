@@ -1,16 +1,16 @@
 {
 	"plugins": [
-		{"name": "browser", "version": "1.1.0", "description": "Clase para obtener datos del navegador del usuario (plataforma, navegador, versión...)." },
-		{"name": "crypt", "version": "1.1.1", "description": "Clase para cifrar/descifrar textos." },
-		{"name": "email", "version": "1.1.1", "description": "Clase para realizar envíos de emails." },
-		{"name": "email_smtp", "version": "1.2.0", "description": "Clase para realizar envíos de emails mediante SMTP." },
-		{"name": "file", "version": "1.4.0", "description": "Clase para manipular archivos (copiar, mover, borrar...)." },
-		{"name": "ftp", "version": "1.1.0", "description": "Clase para realizar conexiones FTP a servidores remotos y manipular sus archivos (subir o bajar archivos, borrar, navegar por el servidor...)." },
-		{"name": "image", "version": "1.1.0", "description": "Clase para manipular imágenes (redimensionar, cambiar de formato, crear nuevas...)." },
-		{"name": "pdf", "version": "1.1.0", "description": "Clase para crear archivos PDF." },
-		{"name": "token", "version": "1.1.1", "description": "Clase para gestionar Tokens JWT." },
-		{"name": "translate", "version": "1.1.0", "description": "Clase para crear una aplicación multi-idioma." },
-		{"name": "video_stream", "version": "1.1.0", "description": "Clase para enviar un archivo de video por streaming." },
-		{"name": "paypal", "version": "1.0.2", "description": "Clase para crear llamadas a Paypal." }
+		{"name": "browser", "version": "2.0.0", "description": "Clase para obtener datos del navegador del usuario (plataforma, navegador, versión...)." },
+		{"name": "crypt", "version": "2.0.0", "description": "Clase para cifrar/descifrar textos." },
+		{"name": "email", "version": "2.0.0", "description": "Clase para realizar envíos de emails." },
+		{"name": "email_smtp", "version": "2.0.0", "description": "Clase para realizar envíos de emails mediante SMTP." },
+		{"name": "file", "version": "2.0.0", "description": "Clase para manipular archivos (copiar, mover, borrar...)." },
+		{"name": "ftp", "version": "2.0.0", "description": "Clase para realizar conexiones FTP a servidores remotos y manipular sus archivos (subir o bajar archivos, borrar, navegar por el servidor...)." },
+		{"name": "image", "version": "2.0.0", "description": "Clase para manipular imágenes (redimensionar, cambiar de formato, crear nuevas...)." },
+		{"name": "paypal", "version": "2.0.0", "description": "Clase para crear llamadas a Paypal." },
+		{"name": "pdf", "version": "2.0.0", "description": "Clase para crear archivos PDF." },
+		{"name": "token", "version": "2.0.0", "description": "Clase para gestionar Tokens JWT." },
+		{"name": "translate", "version": "2.0.0", "description": "Clase para crear una aplicación multi-idioma." },
+		{"name": "video_stream", "version": "2.0.0", "description": "Clase para enviar un archivo de video por streaming." }
 	]
 }

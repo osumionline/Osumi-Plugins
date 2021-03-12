@@ -1,4 +1,12 @@
 <?php declare(strict_types=1);
+
+namespace OsumiFramework\OFW\Plugins;
+
+use OsumiFramework\OFW\Log\OLog;
+
+/**
+ * Utility class to send emails using SMTP
+ */
 class OEmailSMTP {
 	private bool    $debug        = false;
 	private ?Olog   $l            = null;

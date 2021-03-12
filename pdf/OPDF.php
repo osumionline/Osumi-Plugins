@@ -1,4 +1,10 @@
 <?php declare(strict_types=1);
+
+namespace OsumiFramework\OFW\Plugins;
+
+/**
+ * Utility class with tools to create PDF files
+ */
 class OPDF {
 	private string $creator  = '';
 	private string $author   = '';
@@ -17,13 +23,13 @@ class OPDF {
 	 */
 	function __construct(array $data=null) {
 		if (!is_null($data) && is_array($data)) {
-			$this->setCreator(  array_key_exists('creator',  $data)?$data['creator']  : '' );
-			$this->setAuthor(   array_key_exists('author',   $data)?$data['author']   : '' );
-			$this->setTitle(    array_key_exists('title',    $data)?$data['title']    : '' );
-			$this->setSubject(  array_key_exists('subject',  $data)?$data['subject']  : '' );
-			$this->setKeywords( array_key_exists('keywords', $data)?$data['keywords'] : '' );
-			$this->setFont(     array_key_exists('font',     $data)?$data['font']     : 'helvetica' );
-			$this->setPdfDir(   array_key_exists('ruta_pdf', $data)?$data['ruta_pdf'] : '' );
+			$this->setCreator(  array_key_exists('creator',  $data) ? $data['creator']  : '' );
+			$this->setAuthor(   array_key_exists('author',   $data) ? $data['author']   : '' );
+			$this->setTitle(    array_key_exists('title',    $data) ? $data['title']    : '' );
+			$this->setSubject(  array_key_exists('subject',  $data) ? $data['subject']  : '' );
+			$this->setKeywords( array_key_exists('keywords', $data) ? $data['keywords'] : '' );
+			$this->setFont(     array_key_exists('font',     $data) ? $data['font']     : 'helvetica' );
+			$this->setPdfDir(   array_key_exists('path', $data)     ? $data['path']     : '' );
 		}
 	}
 

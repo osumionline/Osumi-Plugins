@@ -1,4 +1,10 @@
 <?php declare(strict_types=1);
+
+namespace OsumiFramework\OFW\Plugins;
+
+/**
+ * Utility class to internationalize an application
+ */
 class OTranslate {
 	private string $page         = '';
 	private ?array $data         = null;

@@ -1,4 +1,10 @@
 <?php declare(strict_types=1);
+
+namespace OsumiFramework\OFW\Plugins;
+
+/**
+ * Utility class to access remote FTP servers
+ */
 class OFTP {
 	private ?string   $lang            = null;
 	private ?string   $server          = null;
@@ -10,8 +16,14 @@ class OFTP {
 	private int       $mode            = FTP_ASCII;
 	private bool      $auto_disconnect = true;
 	private array     $errors          = [
-		'es' => ['CONNECTION' => 'Error de conexión: "%s"', 'LOGIN' => 'Error al iniciar sesión: "%s"'],
-		'en' => ['CONNECTION' => 'Connection error: "%s"', 'LOGIN' => 'Login error: "%s"'],
+		'es' => [
+			'CONNECTION' => 'Error de conexión: "%s"',
+			'LOGIN'      => 'Error al iniciar sesión: "%s"'
+		],
+		'en' => [
+			'CONNECTION' => 'Connection error: "%s"',
+			'LOGIN'      => 'Login error: "%s"'
+		]
 	];
 
 	/**

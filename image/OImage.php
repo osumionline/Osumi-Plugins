@@ -1,4 +1,10 @@
 <?php declare(strict_types=1);
+
+namespace OsumiFramework\OFW\Plugins;
+
+/**
+ * Utility class with tools to manipulate images (create new, resize, get information...)
+ */
 class OImage {
 	private ?resource $image      = null;
 	private ?int      $image_type = null;

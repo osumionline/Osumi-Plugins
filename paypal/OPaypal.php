@@ -1,4 +1,10 @@
 <?php declare(strict_types=1);
+
+namespace OsumiFramework\OFW\Plugins;
+
+/**
+ * Utility class with tools to create a redirection call to Paypal and tools to process Paypal's response
+ */
 class OPaypal {
 	private bool    $sandbox = false;
 	private ?string $paypal_url = null;
@@ -11,7 +17,7 @@ class OPaypal {
 	private array   $items = [];
 	private array   $custom = [];
 	private array   $response_params = [];
-	
+
 	public function __construct(bool $sandbox = false) {
 		$this->sandbox = $sandbox;
 		$this->paypal_url = $sandbox ? 'https://www.sandbox.paypal.com/cgi-bin/webscr' : 'https://www.paypal.com/cgi-bin/webscr';
@@ -295,7 +301,7 @@ class OPaypal {
 			$data['quantity_' . ($i+1)] = $this->items[$i]['num'];
 			$data['amount_' . ($i+1)] = $this->items[$i]['amount'];
 		}
-		
+
 		if (count($this->custom)>0) {
 			$data['custom'] = urlencode(base64_encode(json_encode($this->custom)));
 		}

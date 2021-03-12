@@ -1,8 +1,14 @@
 {
 	"file_name": "OFTP.php",
-	"version": "1.1.0",
+	"version": "2.0.0",
 	"description": "Clase para realizar conexiones FTP a servidores remotos y manipular sus archivos (subir o bajar archivos, borrar, navegar por el servidor...).",
 	"updates": {
+		"2.0.0": {
+			"message": "2.0.0 - Añado nombre de espacios para OFW 7.0",
+			"files": [
+				"OFTP.php"
+			]
+		},
 		"1.1.0": {
 			"message": "1.1.0 - Añado tipado fuerte",
 			"files": [

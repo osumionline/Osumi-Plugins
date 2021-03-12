@@ -1,4 +1,10 @@
 <?php declare(strict_types=1);
+
+namespace OsumiFramework\OFW\Plugins;
+
+/**
+ * Utility class to get user's browser and extra information based on the User Agent
+ */
 class OBrowser{
 	private ?array $browser_data = null;
 	private string $ua           = '';
