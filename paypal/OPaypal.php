@@ -2,6 +2,8 @@
 
 namespace OsumiFramework\OFW\Plugins;
 
+use OsumiFramework\OFW\Web\ORequest;
+
 /**
  * Utility class with tools to create a redirection call to Paypal and tools to process Paypal's response
  */
