@@ -2,12 +2,23 @@
 
 namespace OsumiFramework\OFW\Plugins;
 
+use \GdImage;
+
 /**
  * Utility class with tools to manipulate images (create new, resize, get information...)
  */
 class OImage {
-	private ?resource $image      = null;
-	private ?int      $image_type = null;
+	private ?GdImage $image      = null;
+	private ?int     $image_type = null;
+
+	/**
+	 * Get loaded files image type
+	 *
+	 * @return int Image type constant of the loaded file (or null if file hasn't been loaded yet)
+	 */
+	public function getImageType(): ?int {
+		return $this->image_type;
+	}
 
 	/**
 	 * Load into memory the specified file
@@ -23,10 +34,18 @@ class OImage {
 		switch ($this->image_type) {
 			case IMAGETYPE_JPEG: { $this->image = imagecreatefromjpeg($filename); }
 			break;
-			case IMAGETYPE_GIF: {  $this->image = imagecreatefromgif($filename);  }
+			case IMAGETYPE_GIF: { $this->image = imagecreatefromgif($filename);  }
 			break;
-			case IMAGETYPE_PNG: {  $this->image = imagecreatefrompng($filename);  }
+			case IMAGETYPE_PNG: { $this->image = imagecreatefrompng($filename);  }
 			break;
+			case IMAGETYPE_WEBP: { $this->image = imagecreatefromwebp($filename); }
+			break;
+		}
+
+		if ($this->image_type === IMAGETYPE_PNG || $this->image_type === IMAGETYPE_WEBP) {
+			imagepalettetotruecolor($this->image);
+			imagealphablending($this->image, true);
+			imagesavealpha($this->image, true);
 		}
 	}
 
@@ -47,9 +66,11 @@ class OImage {
 		switch ($image_type) {
 			case IMAGETYPE_JPEG: { imagejpeg($this->image, $filename, $compression); }
 			break;
-			case IMAGETYPE_GIF: {  imagegif($this->image,  $filename); }
+			case IMAGETYPE_GIF: { imagegif($this->image,  $filename); }
 			break;
-			case IMAGETYPE_PNG: {  imagepng($this->image,  $filename); }
+			case IMAGETYPE_PNG: { imagepng($this->image,  $filename); }
+			break;
+			case IMAGETYPE_WEBP: { imagewebp($this->image, $filename); }
 			break;
 		}
 		if (!is_null($permissions)) {
@@ -64,13 +85,15 @@ class OImage {
 	 *
 	 * @return void
 	 */
-	function output(int $image_type=IMAGETYPE_JPEG): void {
+	public function output(int $image_type=IMAGETYPE_JPEG): void {
 		switch ($image_type) {
 			case IMAGETYPE_JPEG: { imagejpeg($this->image); }
 			break;
 			case IMAGETYPE_GIF: {  imagegif($this->image);  }
 			break;
 			case IMAGETYPE_PNG: {  imagepng($this->image);  }
+			break;
+			case IMAGETYPE_WEBP: { imagewebp($this->image); }
 			break;
 		}
 	}
@@ -80,7 +103,7 @@ class OImage {
 	 *
 	 * @return int Width of the loaded file
 	 */
-	function getWidth(): int {
+	public function getWidth(): int {
 		return imagesx($this->image);
 	}
 
@@ -89,7 +112,7 @@ class OImage {
 	 *
 	 * @return int Height of the loaded file
 	 */
-	function getHeight(): int {
+	public function getHeight(): int {
 		return imagesy($this->image);
 	}
 
@@ -100,7 +123,7 @@ class OImage {
 	 *
 	 * @return void
 	 */
-	function resizeToHeight(int $height): void {
+	public function resizeToHeight(int $height): void {
 		$ratio = $height / $this->getHeight();
 		$width = $this->getWidth() * $ratio;
 		$this->resize($width, $height);
@@ -113,9 +136,9 @@ class OImage {
 	 *
 	 * @return void
 	 */
-	function resizeToWidth(int $width): void {
+	public function resizeToWidth(int $width): void {
 		$ratio  = $width / $this->getWidth();
-		$height = $this->getheight() * $ratio;
+		$height = intval($this->getheight() * $ratio);
 		$this->resize($width, $height);
 	}
 
@@ -126,7 +149,7 @@ class OImage {
 	 *
 	 * @return void
 	 */
-	function scale(int $scale): void {
+	public function scale(int $scale): void {
 		$width  = $this->getWidth() * $scale/100;
 		$height = $this->getheight() * $scale/100;
 		$this->resize($width, $height);
@@ -141,8 +164,14 @@ class OImage {
 	 *
 	 * @return void
 	 */
-	function resize(int $width, int $height): void {
+	public function resize(int $width, int $height): void {
 		$new_image = imagecreatetruecolor($width, $height);
+		if ($this->image_type === IMAGETYPE_PNG || $this->image_type === IMAGETYPE_WEBP) {
+			imagealphablending($new_image, false);
+			imagesavealpha($new_image, true);
+			$transparent = imagecolorallocatealpha($new_image, 255, 255, 255, 127);
+			imagefilledrectangle($new_image, 0, 0, $width, $height, $transparent);
+		}
 		imagecopyresampled($new_image, $this->image, 0, 0, 0, 0, $width, $height, $this->getWidth(), $this->getHeight());
 		$this->image = $new_image;
 	}
