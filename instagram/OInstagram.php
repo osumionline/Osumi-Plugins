@@ -232,4 +232,26 @@ class OInstagram {
 
 		return $posts_parsed;
 	}
+
+	/**
+	 * Refresh long lived access token before it expires
+	 *
+	 * @return array Access token returned by Instagram or null if something fails
+	 */
+	public function refreshLongLivedAccessToken(): ?array {
+		$long_lived_access_token = OTools::curlRequest('get', $this->instagram_graph_url.'refresh_access_token', [
+			'grant_type' => 'ig_refresh_token',
+			'access_token' => $this->getLongLivedAccessToken()
+		]);
+
+		$long_parsed = json_decode($long_lived_access_token, true);
+
+		// If the result is not null, then there is an access token
+		if (!is_null($long_parsed)) {
+			$this->setLongLivedAccessToken($long_parsed['access_token']);
+			$this->setLongLivedAccessTokenExpiresIn($long_parsed['expires_in']);
+		}
+
+		return $long_parsed;
+	}
 }
