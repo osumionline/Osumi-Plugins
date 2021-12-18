@@ -205,7 +205,7 @@ class OInstagram {
 			$this->setLongLivedAccessTokenExpiresIn($long_parsed['expires_in']);
 		}
 
-		return $short_parsed;
+		return $long_parsed;
 	}
 
 	/**

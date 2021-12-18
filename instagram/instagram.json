@@ -1,8 +1,14 @@
 {
 	"file_name": "OInstagram.php",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Clase para crear llamadas a Instagram.",
 	"updates": {
+		"1.0.1": {
+			"message": "1.0.1 - Corrección en createLongLivedAccessToken",
+			"files": [
+				"OInstagram.php"
+			]
+		},
 		"1.0.0": {
 			"message": "1.0.0 - Versión inicial del plugin OInstagram",
 			"files": [
