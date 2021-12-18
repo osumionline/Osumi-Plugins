@@ -167,7 +167,7 @@ class OInstagram {
 	 * @return array Access token returned by Instagram or null if something fails
 	 */
 	public function createShotLivedAccessToken(string $code): ?array {
-		$short_lived_access_token = OTools::curlRequest('post', $instagram_api_url.'access_token', [
+		$short_lived_access_token = OTools::curlRequest('post', $this->instagram_api_url.'access_token', [
 			'client_id' => $this->client_id,
 			'client_secret' => $this->client_secret,
 			'grant_type' => 'authorization_code',
@@ -191,7 +191,7 @@ class OInstagram {
 	 * @return array Access token returned by Instagram or null if something fails
 	 */
 	public function createLongLivedAccessToken(): ?array {
-		$long_lived_access_token = OTools::curlRequest('get', $instagram_graph_url.'access_token', [
+		$long_lived_access_token = OTools::curlRequest('get', $this->instagram_graph_url.'access_token', [
 			'grant_type' => 'ig_exchange_token',
 			'client_secret' => $this->client_secret,
 			'access_token' => $this->getShortLivedAccessToken()
@@ -227,7 +227,7 @@ class OInstagram {
 		if (!is_null($limit)) {
 			$params['limit'] = $limit;
 		}
-		$posts = OTools::curlRequest('get', $instagram_graph_url.'me/media', $params);
+		$posts = OTools::curlRequest('get', $this->instagram_graph_url.'me/media', $params);
 		$posts_parsed = json_decode($posts, true);
 
 		return $posts_parsed;
