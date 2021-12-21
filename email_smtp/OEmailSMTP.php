@@ -13,6 +13,8 @@ class OEmailSMTP {
 	private string  $lang         = 'es';
 	private array   $smtp_data    = [];
 	private array   $recipients   = [];
+	private ?string $cc           = null;
+	private ?string $bcc          = null;
 	private string  $subject      = '';
 	private string  $message      = '';
 	private bool    $is_html      = true;
@@ -81,6 +83,46 @@ class OEmailSMTP {
 	 */
 	public function addRecipient(string $r): void {
 		array_push($this->recipients, $r);
+	}
+
+	/**
+	 * Set emails CC copy recipient
+	 *
+	 * @param string $cc Emails copy recipient
+	 *
+	 * @return void
+	 */
+	public function setCC(string $cc): void {
+		$this->cc = $cc;
+	}
+
+	/**
+	 * Get emails CC copy recipient
+	 *
+	 * @return string Emails CC copy recipient
+	 */
+	public function getCC(): ?string {
+		return $this->cc;
+	}
+
+	/**
+	 * Set emails BCC copy recipient
+	 *
+	 * @param string $bcc Emails copy recipient
+	 *
+	 * @return void
+	 */
+	public function setBCC(string $bcc): void {
+		$this->bcc = $bcc;
+	}
+
+	/**
+	 * Get emails BCC copy recipient
+	 *
+	 * @return string Emails BCC copy recipient
+	 */
+	public function getBCC(): ?string {
+		return $this->bcc;
 	}
 
 	/**
@@ -324,6 +366,12 @@ class OEmailSMTP {
 					}
 					else {
 						$mail->setFrom($this->getFrom(), $this->getFromName());
+					}
+					if (!is_null($this->getCC())) {
+						$mail->addCC($this->getCC());
+					}
+					if (!is_null($this->getBCC())) {
+						$mail->addBCC($this->getBCC());
 					}
 					$mail->addAddress($item);
 					$mail->Subject = $this->getSubject();

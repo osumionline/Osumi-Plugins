@@ -1,6 +1,6 @@
 {
 	"file_name": "OEmailSMTP.php",
-	"version": "2.0.0",
+	"version": "2.1.0",
 	"description": "Clase para realizar envíos de emails mediante SMTP.",
 	"dependencies": [
 		"Exception.php",
@@ -9,6 +9,12 @@
 	],
 	"config": ["host", "port", "secure", "user", "pass"],
 	"updates": {
+		"2.1.0": {
+			"message": "2.1.0 - Añado funcionalidad para enviar CC y BCC",
+			"files": [
+				"OEmailSMTP.php"
+			]
+		},
 		"2.0.0": {
 			"message": "2.0.0 - Añado nombre de espacios para OFW 7.0",
 			"files": [
