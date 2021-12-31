@@ -73,6 +73,7 @@ class OFile {
 			'app',
 			'app/component',
 			'app/config',
+			'app/dto',
 			'app/filter',
 			'app/layout',
 			'app/model',
@@ -101,6 +102,7 @@ class OFile {
 			'ofw/tmp',
 			'ofw/vendor',
 			'ofw/vendor/cache',
+			'ofw/vendor/cli',
 			'ofw/vendor/core',
 			'ofw/vendor/db',
 			'ofw/vendor/log',
@@ -120,8 +122,9 @@ class OFile {
 	public static function getOFWFiles(): array {
 		return [
 			'ofw/export/.gitignore',
-			'ofw/locale/en.php',
-			'ofw/locale/es.php',
+			'ofw/locale/en.po',
+			'ofw/locale/es.po',
+			'ofw/locale/eu.po',
 			'ofw/plugins/.gitignore',
 			'ofw/plugins/plugins.txt',
 			'ofw/task/add.php',
@@ -130,6 +133,7 @@ class OFile {
 			'ofw/task/extractor.php',
 			'ofw/task/generateModel.php',
 			'ofw/task/plugins.php',
+			'ofw/task/reset.php',
 			'ofw/task/update.php',
 			'ofw/task/updateCheck.php',
 			'ofw/task/updateUrls.php',
@@ -159,13 +163,16 @@ class OFile {
 			'ofw/tmp/.gitignore',
 			'ofw/vendor/cache/ocache.class.php',
 			'ofw/vendor/cache/ocache.container.class.php',
+			'ofw/vendor/cli/cli.php',
 			'ofw/vendor/core/oconfig.class.php',
 			'ofw/vendor/core/ocore.class.php',
+			'ofw/vendor/core/odto.interface.php',
 			'ofw/vendor/core/omodule.class.php',
 			'ofw/vendor/core/oplugin.class.php',
 			'ofw/vendor/core/oservice.class.php',
 			'ofw/vendor/core/otask.class.php',
 			'ofw/vendor/core/otemplate.class.php',
+			'ofw/vendor/core/otranslate.class.php',
 			'ofw/vendor/core/oupdate.class.php',
 			'ofw/vendor/db/odb.class.php',
 			'ofw/vendor/db/odb.container.class.php',
@@ -181,8 +188,7 @@ class OFile {
 			'ofw/vendor/web/orequest.class.php',
 			'ofw/vendor/web/osession.class.php',
 			'ofw/vendor/version.json',
-			'web/index.php',
-			'ofw.php'
+			'web/index.php'
 		];
 	}
 
